@@ -1,0 +1,25 @@
+{
+  "name": "movie-theatre",
+  "version": "1.0.0",
+  "description": "movie theatre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Osorabrian/Flatiron-Movie-Theatre.git"
+  },
+  "keywords": [
+    "html",
+    "js",
+    "css",
+    "json"
+  ],
+  "author": "brian isaboke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Osorabrian/Flatiron-Movie-Theatre/issues"
+  },
+  "homepage": "https://github.com/Osorabrian/Flatiron-Movie-Theatre#readme"
+}
