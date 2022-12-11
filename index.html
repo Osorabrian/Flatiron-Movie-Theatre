@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Theatre</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="styleshhet" href="./css/style.css">
+</head>
+<body>
+
+<!--Create the nav Bar-->
+<nav class="navbar" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="./images/logo.jpeg" alt="page logo" height="80px" width="90px" class="d-inline-block">
+            MOVIE THEATRE
+        </a>
+    </div>
+</nav>
+
+<div class="row">
+    <!--Creates a list to the left side of the webpage-->
+    <div class="col-4 mt-2">
+        <h3 style="text-align: center; color:blue">Movies List</h3>
+        <ul class="list-group" id="films">
+        </ul>
+    </div>
+
+    <div class="col-8" id="movie_details">
+        <h3 style="text-align: center; color:blue">Movies Details</h3>
+        <div class="row mt-3">
+            <div class="col-4" id="movie_image">
+            </div>
+            <div class="col-8" id="movie_description">
+            </div>
+        </div>
+        <div class="row mt-3" id="book_form">  
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="index.js"></script>    
+</body>
+</html>
