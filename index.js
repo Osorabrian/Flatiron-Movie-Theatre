@@ -14,7 +14,8 @@ function generateMovieList(movies){
         list.classList.add('film-item','list-group-item' )
         films.appendChild(list)
 
-        list.addEventListener('click', () => {
+        list.addEventListener('click', (e) => {
+            e.preventDefault()
             generateMovieDetails(movie)
         })
     }); 
@@ -28,57 +29,60 @@ function generateMovieDetails(movie){
     const remainingSeats = movie.capacity - movie.tickets_sold
 
     movieImage.innerHTML =
-    `<img src="${movie.poster}" alt="movie poster" height="200px" width="150px"></img>`
+    `<img src="${movie.poster}" alt="movie poster" height="200px" width="150px"></img>
+    <form id="form_book">
+        <label class="form-label" >Number of tickets: </label>
+        <input id="tickets" type="number" placeholder="Input Number of tickets" class="form-control" style="width:400px" min="0" step="1" max="${remainingSeats}" required>
+        <button type="submit" class="btn btn-primary mt-2" id="book_ticket">Book Ticket</button>
+    </form>
+    `
+    
 
     movieDescription.innerHTML = 
-        `<form id="form_book">
+        `
          <h4>${movie.title}</h4>
          <p>${movie.description}</p>
          <p>Show Time: ${movie.showtime}</p>
-         <p>Remaining Seats: ${remainingSeats}</p>
-        <label class="form-label" >Number of tickets: </label>
-        <input id="tickets" type="number" placeholder="Input Number of tickets" class="form-control" style="width:400px"required>
-        <button type="submit" class="btn btn-primary mt-2" id="book_ticket">Book Ticket</button>
-        </form>
+         <p id="seats">Remaining Seats: ${remainingSeats}</p>
         `
-        const form = document.querySelector('#form_book')
+    const tickets = document.getElementById('tickets').value
+    
+    
+    if(remainingSeats === 0){
+            document.getElementById('tickets').disabled = true
+            const button = document.getElementById('book_ticket')
+            button.innerText = 'Sold Out'
+            button.disabled = true
+        }
+
+    const form = document.getElementById('form_book')
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            generateTicket(movie)
-        })
+            e.stopPropagation();
+            generateTicket(movie)  
+        })    
 
     
-
-    if(remainingSeats === 0){
-        document.getElementById('tickets').disabled = true
-        const button = document.getElementById('book_ticket')
-        button.innerText = 'Sold Out'
-        button.disabled = true
-    }
 
     
 }
 
 function generateTicket(movie){
-    const tickets = document.getElementById('tickets').value
 
+    const remainingSeats = movie.capacity - movie.tickets_sold
+    const tickets = document.getElementById('tickets').value
     movie.tickets_sold += parseInt(tickets,10)
 
     fetch(`http://localhost:3000/films/${movie.id}`,{
         method: 'PATCH',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
+        headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(movie)
     })
     .then(response => response.json())
     .then(data => data)
 
-        if (remainingSeats === 0){
-            alert('Sorry all tickets are sold out')
-        }else{
-            alert(`Thank you!\n You have bought ${tickets} tickets`)
-        }
+     alert(`Thank you!\n You have bought ${tickets} tickets\n for ${movie.title}`)
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
