@@ -28,13 +28,22 @@
         </ul>
     </div>
 
+    <!--Create divs for storing movie details to the right side of webpage-->
     <div class="col-8" id="movie_details">
+        
         <h3 style="text-align: center; color:blue">Movies Details</h3>
+
         <div class="row mt-3">
-            <div class="col-4" id="movie_image">
-            </div>
-            <div class="col-8" id="movie_description">
-            </div>
+            <p style="text-align: center; color: #f00"> click on a movie on the list to the left to display its details.</p> 
+                
+            <!--div for displaying move poster and book ticket form-->
+                <div class="col-4" id="movie_image">
+                </div>
+
+            <!--div for displaying movie description-->
+                <div class="col-8" id="movie_description">
+                </div>
+                <button type="button" class="btn btn-danger mt-2 " id="delete_movie" style="visibility:hidden; width: 15%">Delete Movie</button>
         </div>
         <div class="row mt-3" id="book_form">  
         </div>
