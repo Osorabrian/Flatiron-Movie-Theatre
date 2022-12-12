@@ -76,7 +76,7 @@ function generateMovieDetails(movie){
 
         // eventListener for form submit used to book
         form.addEventListener('submit', (e) => {
-            e.preventDefault();
+        
             patchMovieDetails(movie)  
         }) 
     
