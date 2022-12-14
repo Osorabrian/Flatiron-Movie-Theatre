@@ -8,18 +8,18 @@ The flatiron movie theatre is a webpage that allows users to:
 - Allow users to delete movies
   
 ## Live Link  
-Link: https://osorabrian.github.io/Flatiron-Movie-Theatre/
+Link: https://flatiron-movie-theatre.vercel.app/
 
 ## ScreenShot
 
 ![image](https://user-images.githubusercontent.com/83941341/206997909-0a315340-0484-483f-83ac-7eda32c034bc.png)
 
 ## Set up Instructions
+- Run the live Link https://flatiron-movie-theatre.vercel.app/  
+  OR
 - Fork the repo
 - Clone the remote to your local repo
-- If you have not installed json server on your computer open your terminal and install json-server using the following command ```npm install -g json-server``` , if you have it already installed proceed to the next step
-- Navigate to the local repostory via your terminal and run npm start or ```json-server --watch db.json```
-- Navigate to the local repostory via file explorer and run index.html with live server
+- run the index.html via live server
 - Click on a movie from the list on your left and it will ddisplay the movie details to the right.
   
 ## Technologies Used
