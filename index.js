@@ -1,8 +1,8 @@
 // Function used to fetch data from JSON server (db.json file)
 function fetchMoviesList(){
-    fetch("http://localhost:3000/films")
+    fetch("https://flatiron-movie-theatre.vercel.app/db.json")
     .then(response => response.json())
-    .then(data => generateMovieList(data))
+    .then(data => generateMovieList(data.films))
 }
 
 /*
@@ -40,16 +40,13 @@ function generateMovieDetails(movie){
     const movieImage = document.getElementById('movie_image')
     const movieDescription= document.getElementById('movie_description')
 
-    const remainingSeats = movie.capacity - movie.tickets_sold
-
     // image and book ticket form is rendered in the image div if the movie is selected
     movieImage.innerHTML =
     `<img src="${movie.poster}" alt="movie poster" height="200px" width="150px"></img>
     <form id="form_book">
         <label class="form-label" >Number of tickets: </label>
-        <input id="tickets" type="number" placeholder="Input Number of tickets" class="form-control" style="width:400px" min="0" step="1" max="${remainingSeats}" required>
+        <input id="tickets" type="number" placeholder="Input Number of tickets" class="form-control" style="width:400px" min="0" step="1" max="${movie.capacity - movie.tickets_sold}" required>
         <button type="submit" class="btn btn-primary mt-2" id="book_ticket">Book Ticket</button>
-        
     </form>
     `
     
@@ -59,12 +56,12 @@ function generateMovieDetails(movie){
          <h4>${movie.title}</h4>
          <p>${movie.description}</p>
          <p>Show Time: ${movie.showtime}</p>
-         <p id="seats">Remaining Seats: ${remainingSeats}</p>
+         <p id="seats">Remaining Seats: ${movie.capacity - movie.tickets_sold}</p>
         `
-    const tickets = document.getElementById('tickets').value
+   
+     
     
-    // if condition that makes changes to button and input field when the seats are sold out
-    if(remainingSeats === 0){
+    if((movie.capacity - movie.tickets_sold) === 0){
             document.getElementById('tickets').disabled = true
             const button = document.getElementById('book_ticket')
             button.innerText = 'Sold Out'
@@ -72,35 +69,32 @@ function generateMovieDetails(movie){
         }
 
     // get the form for booking movie tickets
-    const form = document.getElementById('form_book')
+    const form = document.getElementById('form_book') 
+   
 
         // eventListener for form submit used to book
         form.addEventListener('submit', (e) => {
-            patchMovieDetails(movie) 
+            e.preventDefault()
+            const tickets = document.getElementById('tickets')
+            movie.tickets_sold += parseInt(tickets.value,10)
+            document.getElementById('seats').innerText = `Remaining Seats: ${movie.capacity - movie.tickets_sold}`
+
+            // if condition that makes changes to button and input field when the seats are sold out
+            if((movie.capacity - movie.tickets_sold) === 0){
+                document.getElementById('tickets').disabled = true
+                const button = document.getElementById('book_ticket')
+                button.innerText = 'Sold Out'
+                button.disabled = true
+            }
+
+            // prevent users from entering data that exceeds the range that will result in negative results
+            tickets.max = movie.capacity - movie.tickets_sold
+            tickets.min = 0
+            tickets.step = 1
+
             form.reset()
         }) 
     
-}
-
-// function for patching data to server
-function patchMovieDetails(movie){
-
-    const remainingSeats = movie.capacity - movie.tickets_sold
-    const tickets = document.getElementById('tickets').value
-    movie.tickets_sold += parseInt(tickets,10)
-
-    // function used to patch new information to the server
-    fetch(`http://localhost:3000/films/${movie.id}`,{
-        method: 'PATCH',
-        headers: {'Content-Type' : 'application/json'},
-        body: JSON.stringify(movie)
-    })
-    .then(response => response.json())
-    .then(data => data)
-
-    // alert the user on the number of tickets bought
-    alert(`Thank you!\n You have bought ${tickets} tickets\n for ${movie.title}`)
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
